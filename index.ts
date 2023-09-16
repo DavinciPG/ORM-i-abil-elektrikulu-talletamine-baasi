@@ -6,6 +6,8 @@ import usageController from "./controllers/Usage";
 
 const app: Express = express();
 
+app.use(express.json());
+
 app.use('/', customerController);
 app.use('/', deviceController);
 app.use('/', usageController);

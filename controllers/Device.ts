@@ -3,6 +3,24 @@ import Device from "../models/Device";
 
 const router: Router = Router();
 
+router.post('/save-many-devices', async (req: Request, res: Response) =>
+{
+    try {
+        req.body.appliances.forEach(async (element: {appliance: string, watts: number})=> {
+            const data = new Device({
+                name: element.appliance,
+                consumption: element.watts
+            })
+            await data.save();
+        })
+
+        res.status(200).json("ALL DATA SAVED");
+    }
+    catch (error) {
+        res.status(400).json({message: error})
+    }
+})
+
 router.post('/device', async (req: Request, res: Response) => {
     const data = new Device({
         name: req.body.name,
